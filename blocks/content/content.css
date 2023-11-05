@@ -1,4 +1,16 @@
-.content {
-  flex-shrink: 0;
-  flex-grow: 1;
+/* .content{
+    margin: auto 200px;
 }
+
+@media screen and (max-width: 1024px) {
+    .content{
+        margin: auto 70px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .content{
+        margin: 0 auto;
+    }
+}
+ */

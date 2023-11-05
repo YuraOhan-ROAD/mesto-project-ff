@@ -1,0 +1,28 @@
+.popup__button-cross{
+    background-image: url(../../../images/Close\ Icon.svg);
+    width: 32px;
+    height: 32px;
+    border: 0;
+    position: absolute;
+    top: -40px;
+    right: -35px;
+    background-color: transparent;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.popup__button-cross:hover{
+    opacity: .6;
+}
+
+
+@media screen and (max-width: 580px) {
+    .popup__button-cross{
+        width: 20px;
+        height: 20px;
+        top: -30px;
+        right: 0;
+    }
+}
+
