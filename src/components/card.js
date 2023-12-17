@@ -13,8 +13,8 @@ export function createCard(elem, templateCard, img, title, openElementModal) {
   dltCardBtn.addEventListener('click', removeCard); 
 
 
-  const heartButtons = card.querySelector('.card__like-button');
-  heartButtons.addEventListener('click', likeCard);
+  const heartButton = card.querySelector('.card__like-button');
+  heartButton.addEventListener('click', likeCard);
 
   return card;
 };
@@ -51,9 +51,10 @@ function likeCard (evt) {
   export function picOpener(image, popupImg, pupupTitle, openedPopupPic) {
     image.addEventListener('click', (event) => {
       const src = event.target.src
-      const popupName = event.target.parentElement.lastElementChild.firstElementChild.innerText
+      const alt = event.target.alt
+      const popupName = event.target.closest('.popup_type_image');
       popupImg.src = src
-      pupupTitle.textContent = popupName
+      pupupTitle.textContent = alt
       openModal(openedPopupPic);
     });
   };
