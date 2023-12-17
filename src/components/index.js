@@ -19,16 +19,25 @@ const jobInput = profileForm.elements.description
 const formElementAdd = document.forms["new-place"];
 const openedPopupPic = document.querySelector('.popup_type_image');
 const popupPicImage = document.querySelector('.popup__image');
-const pupupPicTitle = document.querySelector('.popup__caption');  
+const popupPicTitle = document.querySelector('.popup__caption');  
 
   
 initialCards.forEach((el) => {
-  const addCard = createCard(el, templateCard, popupPicImage, pupupPicTitle, openedPopupPic);
+  const obj = {
+    element: el,
+    template: templateCard,
+    picImage: popupPicImage,
+    picTitle: popupPicTitle,
+    openedPopupPic
+  }
+  const addCard = createCard(obj);
   list.appendChild(addCard);
 });      
 
 modalProfileOpen.addEventListener("click",() => {
   openModal(modalTypeEdit);
+   userInput.value = profileTitle.textContent;
+   jobInput.value = profileDescription.textContent;
 });
 
 btnAddCard.addEventListener("click", function () {

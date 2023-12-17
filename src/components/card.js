@@ -1,13 +1,13 @@
 import { openModal, closeModal} from "./modal.js";
 
-export function createCard(elem, templateCard, img, title, openElementModal) {
-    const card = templateCard.querySelector('.card').cloneNode(true);
+export function createCard({element, template, picImage, picTitle, openedPopupPic} = [...obj]) {
+    const card = template.querySelector('.card').cloneNode(true);
     const imgCard = card.querySelector('.card__image');
     const descriptCard = card.querySelector('.card__title');
-    descriptCard.textContent = elem.name;
-    imgCard.src = elem.link;
-    imgCard.alt = elem.name;
-    picOpener(imgCard, img, title, openElementModal)
+    descriptCard.textContent = element.name;
+    imgCard.src = element.link;
+    imgCard.alt = element.name;
+    picOpener(imgCard, picImage, picTitle, openedPopupPic)
 
   const dltCardBtn = card.querySelector('.card__delete-button');
   dltCardBtn.addEventListener('click', removeCard); 
@@ -18,6 +18,7 @@ export function createCard(elem, templateCard, img, title, openElementModal) {
 
   return card;
 };
+
 
 //remove card
 function removeCard(event) {
