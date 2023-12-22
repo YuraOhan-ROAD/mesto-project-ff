@@ -1,6 +1,6 @@
 import '../pages/index.css';
 import { initialCards } from './cards.js';
-import {createCard,handleFormSubmitAddCard, removeCard, likeCard, picOpener} from './card.js';
+import {createCard, removeCard, likeCard, picOpener} from './card.js';
 import { closeModal, openModal } from './modal.js';
 
 export const template = document.querySelector('#card-template').content;
