@@ -3,7 +3,7 @@ import { initialCards } from './cards.js';
 import {createCard, removeCard, likeCard, picOpener} from './card.js';
 import { closeModal, openModal } from './modal.js';
 
-export const template = document.querySelector('#card-template').content;
+
 const list = document.querySelector('.places__list');
 const modalTypeEdit = document.querySelector('.popup_type_edit');
 const modalProfileOpen = document.querySelector('.profile__edit-button');
@@ -17,10 +17,9 @@ const profileForm = document.forms.edit_profile
 const userInput = profileForm.elements.name
 const jobInput = profileForm.elements.description
 const formElementAdd = document.forms["new-place"];
-export const openedPopupPic = document.querySelector('.popup_type_image');
-export const popupContent = document.querySelector('.popup__content_content_image');
-export const popupPicImage = document.querySelector('.popup__image');
-export const popupPicTitle = document.querySelector('.popup__caption');  
+const openedPopupPic = document.querySelector('.popup_type_image');
+const popupPicImage = document.querySelector('.popup__image');
+const popupPicTitle = document.querySelector('.popup__caption');  
 
   
 initialCards.forEach((el) => {
@@ -65,3 +64,10 @@ formElementAdd.addEventListener("submit", (ev) => {
   formElementAdd.reset();
 });
 
+
+function picOpener(event) {
+  popupPicImage.src = event.target.src
+  popupPicImage.alt = event.target.alt
+  popupPicTitle.textContent = event.target.alt
+    openModal(openedPopupPic);
+};

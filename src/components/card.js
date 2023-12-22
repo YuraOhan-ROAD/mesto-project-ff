@@ -1,5 +1,4 @@
-import { openModal, closeModal} from "./modal.js";
-import { template, popupPicImage, popupPicTitle,openedPopupPic } from "./index.js";
+const template = document.querySelector('#card-template').content;
 
 export function createCard(element, removeCard, likeCard, picOpener) {
     const card = template.querySelector('.card').cloneNode(true);
@@ -37,10 +36,5 @@ export function likeCard (evt) {
 
 
 
-  export function picOpener(event) {
-    popupPicImage.src = event.target.src
-    popupPicImage.alt = event.target.alt
-    popupPicTitle.textContent = event.target.alt
-      openModal(openedPopupPic);
-  };
+ 
 
