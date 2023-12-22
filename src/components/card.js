@@ -1,13 +1,15 @@
 import { openModal, closeModal} from "./modal.js";
+import { template, popupPicImage, popupPicTitle,openedPopupPic } from "./index.js";
 
-export function createCard({element, template, picImage, picTitle, openedPopupPic} = [...obj]) {
+export function createCard(element, removeCard, likeCard, picOpener) {
     const card = template.querySelector('.card').cloneNode(true);
     const imgCard = card.querySelector('.card__image');
     const descriptCard = card.querySelector('.card__title');
     descriptCard.textContent = element.name;
     imgCard.src = element.link;
     imgCard.alt = element.name;
-    picOpener(imgCard, picImage, picTitle, openedPopupPic)
+
+    imgCard.addEventListener('click', picOpener)
 
   const dltCardBtn = card.querySelector('.card__delete-button');
   dltCardBtn.addEventListener('click', removeCard); 
@@ -21,42 +23,24 @@ export function createCard({element, template, picImage, picTitle, openedPopupPi
 
 
 //remove card
-function removeCard(event) {
-   
+export function removeCard(event) {
     event.target.closest('.card').remove();
   };
 
   // like
 
-function likeCard (evt) {
+export function likeCard (evt) {
     if(evt.target.classList.contains('card__like-button')) {
       evt.target.classList.toggle('card__like-button_is-active');
     }
   }
 
 
-  export function handleFormSubmitAddCard(evt, formElementAdd, templateCard, list, popupImg, pupupTitle, openedPopupPic, modalAdd) {
-    evt.preventDefault();
-    const contentCard = {
-      name: formElementAdd["place-name"].value,
-      link: formElementAdd["link"].value,
-    };
-    list.prepend(
-      createCard(contentCard, templateCard, popupImg, pupupTitle, openedPopupPic)
-    );
-    closeModal(modalAdd);
-    
-    formElementAdd.reset();
-  }
 
-  export function picOpener(image, popupImg, pupupTitle, openedPopupPic) {
-    image.addEventListener('click', (event) => {
-      const src = event.target.src
-      const alt = event.target.alt
-      const popupName = event.target.closest('.popup_type_image');
-      popupImg.src = src
-      pupupTitle.textContent = alt
+  export function picOpener(event) {
+    popupPicImage.src = event.target.src
+    popupPicImage.alt = event.target.alt
+    popupPicTitle.textContent = event.target.alt
       openModal(openedPopupPic);
-    });
   };
 

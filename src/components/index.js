@@ -1,9 +1,9 @@
 import '../pages/index.css';
 import { initialCards } from './cards.js';
-import {createCard,handleFormSubmitAddCard} from './card.js';
+import {createCard,handleFormSubmitAddCard, removeCard, likeCard, picOpener} from './card.js';
 import { closeModal, openModal } from './modal.js';
 
-const templateCard = document.querySelector('#card-template').content;
+export const template = document.querySelector('#card-template').content;
 const list = document.querySelector('.places__list');
 const modalTypeEdit = document.querySelector('.popup_type_edit');
 const modalProfileOpen = document.querySelector('.profile__edit-button');
@@ -17,20 +17,14 @@ const profileForm = document.forms.edit_profile
 const userInput = profileForm.elements.name
 const jobInput = profileForm.elements.description
 const formElementAdd = document.forms["new-place"];
-const openedPopupPic = document.querySelector('.popup_type_image');
-const popupPicImage = document.querySelector('.popup__image');
-const popupPicTitle = document.querySelector('.popup__caption');  
+export const openedPopupPic = document.querySelector('.popup_type_image');
+export const popupContent = document.querySelector('.popup__content_content_image');
+export const popupPicImage = document.querySelector('.popup__image');
+export const popupPicTitle = document.querySelector('.popup__caption');  
 
   
 initialCards.forEach((el) => {
-  const obj = {
-    element: el,
-    template: templateCard,
-    picImage: popupPicImage,
-    picTitle: popupPicTitle,
-    openedPopupPic
-  }
-  const addCard = createCard(obj);
+  const addCard = createCard(el,removeCard, likeCard, picOpener);
   list.appendChild(addCard);
 });      
 
@@ -60,5 +54,14 @@ profileForm.addEventListener("submit",(evt) => {
 
 
 formElementAdd.addEventListener("submit", (ev) => {
-  handleFormSubmitAddCard(ev, formElementAdd, templateCard, list, popupPicImage, pupupPicTitle, openedPopupPic, modalAdd);
+  ev.preventDefault();
+  const contentCard = {
+    name: formElementAdd["place-name"].value,
+    link: formElementAdd["link"].value,
+  };
+  list.prepend(
+    createCard(contentCard, removeCard, likeCard, picOpener));
+  closeModal(modalAdd);
+  formElementAdd.reset();
 });
+
