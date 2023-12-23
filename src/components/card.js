@@ -1,6 +1,3 @@
-import { openedPopupPic, popupPicImage, popupPicTitle } from "./index.js";
-import { openModal } from './modal.js';
-
 const template = document.querySelector('#card-template').content;
 
 export function createCard(element, removeCard, likeCard, picOpener) {
@@ -36,13 +33,6 @@ export function likeCard (evt) {
       evt.target.classList.toggle('card__like-button_is-active');
     }
   }
-
-  export function picOpener(event) {
-    popupPicImage.src = event.target.src
-    popupPicImage.alt = event.target.alt
-    popupPicTitle.textContent = event.target.alt
-      openModal(openedPopupPic);
-  };
 
 
 
