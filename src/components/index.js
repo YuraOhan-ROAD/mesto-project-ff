@@ -17,9 +17,9 @@ const profileForm = document.forms.edit_profile
 const userInput = profileForm.elements.name
 const jobInput = profileForm.elements.description
 const formElementAdd = document.forms["new-place"];
-const openedPopupPic = document.querySelector('.popup_type_image');
-const popupPicImage = document.querySelector('.popup__image');
-const popupPicTitle = document.querySelector('.popup__caption');  
+export const openedPopupPic = document.querySelector('.popup_type_image');
+export const popupPicImage = document.querySelector('.popup__image');
+export const popupPicTitle = document.querySelector('.popup__caption');  
 
   
 initialCards.forEach((el) => {
@@ -50,8 +50,6 @@ profileForm.addEventListener("submit",(evt) => {
   closeModal(modalTypeEdit);
 });
 
-
-
 formElementAdd.addEventListener("submit", (ev) => {
   ev.preventDefault();
   const contentCard = {
@@ -63,11 +61,3 @@ formElementAdd.addEventListener("submit", (ev) => {
   closeModal(modalAdd);
   formElementAdd.reset();
 });
-
-
-function picOpener(event) {
-  popupPicImage.src = event.target.src
-  popupPicImage.alt = event.target.alt
-  popupPicTitle.textContent = event.target.alt
-    openModal(openedPopupPic);
-};
