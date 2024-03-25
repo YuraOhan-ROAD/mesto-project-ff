@@ -1,3 +1,5 @@
+
+
 //inputneri errorna cuyc talis
 function showInputError(errorElement, inputElement, errorMessage, validationConfig) {
   inputElement.classList.add(validationConfig.inputErrorClass);
@@ -30,6 +32,7 @@ function checkInputValidity(formElement, inputElement, validationConfig) {
   }
 
 }
+
 
 
 function hasInvalidInput(inputList) {
@@ -72,10 +75,10 @@ function setEventListeners(formElement, validationConfig) {
   });
 
   function checkFormValidity(formElement, inputElement, inputList, buttonElement, validationConfig) {
-    const errorElement = findErrorElement(formElement, inputElement);
-    checkInputValidity(errorElement, inputElement, validationConfig);
-    toggleButtonState(inputList, buttonElement, validationConfig);
-  };
+  const errorElement = findErrorElement(formElement, inputElement);
+  checkInputValidity(errorElement, inputElement, validationConfig);
+  toggleButtonState(inputList, buttonElement, validationConfig);
+}
 
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('focusout', function () {
@@ -92,4 +95,4 @@ function enableValidation(validationConfig) {
   });
 }
 
-export { enableValidation, clearValidation, showInputError, checkFormValidity };
+export { enableValidation, clearValidation, showInputError };

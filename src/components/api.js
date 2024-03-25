@@ -18,29 +18,29 @@ const apiConfig = {
     return Promise.reject(`Не удалось получить данные: ${res.status}`);
   }
 
-  // function checkLinkType(link, avatarErrorElement, editAvatarInput, validationConfig) {
-  //   return fetch(link, {
-  //     method: 'HEAD'
-  //   })
-  //     .then((res) => {
-  //       if (res.ok) {
-  //         if (res.headers.has('Content-Type')) {
-  //           const contentType = res.headers.get('Content-Type');
-  //           if (contentType.includes('image')) {
-  //             return true;
-  //           } else {
-  //             showInputError(avatarErrorElement, editAvatarInput, 'Ссылка не ведет на изображение.', validationConfig);
-  //           }
-  //         } else {
-  //           showInputError(avatarErrorElement, editAvatarInput, 'Не удалось определить тип контента.', validationConfig);
-  //         }
-  //       }
-  //       showInputError(avatarErrorElement, editAvatarInput, 'Не удалось получить данные.', validationConfig);
-  //       return false;
-  //     }).catch((err) => {
-  //       console.log(err)
-  //     });
-  // }
+  function checkLinkType(link, avatarErrorElement, editAvatarInput, validationConfig) {
+    return fetch(link, {
+      method: 'HEAD'
+    })
+      .then((res) => {
+        if (res.ok) {
+          if (res.headers.has('Content-Type')) {
+            const contentType = res.headers.get('Content-Type');
+            if (contentType.includes('image')) {
+              return true;
+            } else {
+              showInputError(avatarErrorElement, editAvatarInput, 'Ссылка не ведет на изображение.', validationConfig);
+            }
+          } else {
+            showInputError(avatarErrorElement, editAvatarInput, 'Не удалось определить тип контента.', validationConfig);
+          }
+        }
+        showInputError(avatarErrorElement, editAvatarInput, 'Не удалось получить данные.', validationConfig);
+        return false;
+      }).catch((err) => {
+        console.log(err)
+      });
+  }
   
   function getUserData() {
      return fetch(apiConfig.baseUrl + '/users/me', {
@@ -130,7 +130,7 @@ const apiConfig = {
      return Promise.all([getCardData(), getUserData()]);
   }
 
-  export{NewAvatar, updateUserData, getCardData, getUserData, loadData, addNewCard, deleteCard, addLike, user, deleteLike}
+  export{NewAvatar, updateUserData, getCardData, getUserData, loadData, addNewCard, deleteCard, addLike, user, deleteLike, checkLinkType}
 
 
 

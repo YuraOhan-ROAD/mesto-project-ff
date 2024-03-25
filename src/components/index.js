@@ -1,7 +1,7 @@
 import '../pages/index.css';
 import {createCard, removeCard} from './card.js';
 import { closeModal, openModal } from './modal.js';
-import {addNewCard, loadData, updateUserData, user, NewAvatar} from './api.js';
+import {addNewCard, loadData, updateUserData, user, NewAvatar,checkLinkType} from './api.js';
 import {enableValidation, clearValidation, checkFormValidity} from './validation.js';
 
 
@@ -24,6 +24,7 @@ const formElementAdd = document.forms["new-place"];
 const openedPopupPic = document.querySelector('.popup_type_image');
 const popupPicImage = document.querySelector('.popup__image');
 const popupPicTitle = document.querySelector('.popup__caption');  
+// const popupTypeImage = document.querySelector('.popup_type_image');
 const modalEditAvatar = document.querySelector('.popup_type_edit-avatar');
 const profileAvatarEditButton = document.querySelector('.profile__image-edit-button');
 const formEditAvatar = document.forms['edit-avatar'];
@@ -143,13 +144,17 @@ profileForm.addEventListener("submit",(evt) => {
   updateUserData(userInput.value,jobInput.value)
   .then((res) => {
   profileTitle.textContent = res.name;
-   profileDescription.textContent = res.about;
+   profileDescription.textContent = res.name;
 
   closeModal(modalTypeEdit);
   editButtonLoading(evt.target.querySelector('.popup__button'));
   });
    
 });
+
+
+
+
 
 enableValidation(validationConfig);
 
