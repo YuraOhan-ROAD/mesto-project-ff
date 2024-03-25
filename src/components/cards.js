@@ -5,7 +5,7 @@ const kamchatka = new URL("https://pictures.s3.yandex.net/frontend-developer/car
 const kholmogorsky_rayon = new URL("https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg", import.meta.url);
 const baikal = new URL("https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg", import.meta.url);
 
-export const initialCards = [
+export let initialCards = [
   {
     name: "Архыз",
     link: archyz,
@@ -31,3 +31,8 @@ export const initialCards = [
     link: baikal,
   }
 ];
+
+export function setInitialCards(value) {
+  initialCards = value
+}
+
