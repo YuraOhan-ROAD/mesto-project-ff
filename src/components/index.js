@@ -4,9 +4,6 @@ import { closeModal, openModal } from './modal.js';
 import {checkResponse, addNewCard, loadData, updateUserData, setNewAvatar,checkLinkType,cardDeleteRequest} from './api.js';
 import {enableValidation, clearValidation, checkFormValidity} from './validation.js';
 
-
-
-
 const list = document.querySelector('.places__list');
 const modalTypeEdit = document.querySelector('.popup_type_edit');
 const modalProfileOpen = document.querySelector('.profile__edit-button');
@@ -30,7 +27,6 @@ const formEditAvatar = document.forms['edit-avatar'];
 const editAvatarInput = formEditAvatar.elements.link;
 
 
-
 const cardDeletePopup = document.querySelector('.popup_type_delete');
 const deleteButton = cardDeletePopup.querySelector('.popup__button');
 let cardToRemoveElement;
@@ -49,14 +45,12 @@ function handleRemove(cardElement, cardData) {
   openModal(cardDeletePopup);
 }
 
-
 deleteButton.addEventListener('click', () => {
   if (cardToRemoveElement) {
     removeCard(cardToRemoveElement);
     closeModal(cardDeletePopup);
   }
 });
-
 
 
 const validationConfig = {
@@ -182,11 +176,6 @@ profileForm.addEventListener("submit",(evt) => {
   closeModal(modalTypeEdit);
   editButtonLoading(evt.target.querySelector('.popup__button'));
   });
-   
 });
-
-
-
-
 
 enableValidation(validationConfig);

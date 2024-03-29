@@ -42,8 +42,6 @@ export function createCard(element, handleRemove, picOpener) {
   return card;
 };
 
-
-  
   // like
   function likeCard (evt, id, likeCount) {
   const likeMethod = evt.target.classList.contains('card__like-button_is-active') ? deleteLike: addLike;
@@ -54,5 +52,3 @@ likeMethod(id)
         })
 .catch(err => console.log(err));
 }
-
- 

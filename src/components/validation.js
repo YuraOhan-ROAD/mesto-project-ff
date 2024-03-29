@@ -1,19 +1,13 @@
-
-
-//inputneri errorna cuyc talis
 function showInputError(errorElement, inputElement, errorMessage, validationConfig) {
   inputElement.classList.add(validationConfig.inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(validationConfig.errorClass);
 }
 
-
 function hideInputError(errorElement, inputElement, validationConfig) {
   inputElement.classList.remove(validationConfig.inputErrorClass);
   errorElement.classList.remove(validationConfig.errorClass);
 }
-
-//gtnuma errory
 
 function findErrorElement(formElement, inputElement) {
   return formElement.querySelector(`.${inputElement.id}-error`);
@@ -32,8 +26,6 @@ function checkInputValidity(formElement, inputElement, validationConfig) {
   }
 
 }
-
-
 
 function hasInvalidInput(inputList) {
   return inputList.some((inputElement) => {
@@ -62,8 +54,6 @@ function clearValidation(formElement, validationConfig) {
   });
   toggleButtonState(inputList, buttonElement, validationConfig);
 }
-
-
 
 function setEventListeners(formElement, validationConfig) {
   const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
