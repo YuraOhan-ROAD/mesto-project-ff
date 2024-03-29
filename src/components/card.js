@@ -1,12 +1,12 @@
-import {closeModal, openModal } from './modal.js'; 
-import {deleteCard, addLike, deleteLike} from './api.js'; 
+
+import {addLike, deleteLike} from './api.js'; 
 
 const template = document.querySelector('#card-template').content;
-const popupTypeDelete = document.querySelector('.popup_type_delete');
-const popupQuestionButton = document.querySelector('.question__remove_button');
-const deletedModalClosed = document.querySelector('.deleted-modal-closed');
+// const popupTypeDelete = document.querySelector('.popup_type_delete');
+// const popupQuestionButton = document.querySelector('.question__remove_button');
+// const deletedModalClosed = document.querySelector('.deleted-modal-closed');
 
-export function createCard(element, removeCard, picOpener) {
+export function createCard(element, handleRemove, picOpener) {
     const card = template.querySelector('.card').cloneNode(true);
     const imgCard = card.querySelector('.card__image');
     const descriptCard = card.querySelector('.card__title');
@@ -16,6 +16,10 @@ export function createCard(element, removeCard, picOpener) {
 
     if(element.card.owner._id !== element.user._id) {
       dltCardBtn.remove();
+    } else {
+      dltCardBtn.addEventListener('click', (e) => {
+        handleRemove(card, element);
+        });
     }
     descriptCard.textContent = element.card.name;
     imgCard.src = element.card.link;
@@ -25,14 +29,12 @@ export function createCard(element, removeCard, picOpener) {
     element.card.likes.forEach(el => {
       if (el._id === element.user._id) {
         heartButton.classList.add('card__like-button_is-active');
-      }
+      } 
     });
 
     imgCard.addEventListener('click', picOpener);
   
-    dltCardBtn.addEventListener('click', (e) => {
-    questionRemoveCard(e, element);
-    });
+  
   
   heartButton.addEventListener('click',(evt) => {
     likeCard(evt, element.card._id, likeCount)
@@ -40,47 +42,17 @@ export function createCard(element, removeCard, picOpener) {
   return card;
 };
 
-function questionRemoveCard(e, element) {
-  openModal(popupTypeDelete);
-  popupQuestionButton.addEventListener('click', () => {
-    popupQuestionClick(e, element)
-  });
-  deletedModalClosed.addEventListener('click', deletedModalClosedClick);
-};
 
-function popupQuestionClick (e, element)  {
- deleteCard(element.card._id);
- closeModal(popupTypeDelete);
- popupQuestionButton.removeEventListener('click', popupQuestionClick);
- deletedModalClosed.removeEventListener('click', deletedModalClosedClick);
- removeCard(e);
-};
-
-function deletedModalClosedClick ()  {
- popupQuestionButton.removeEventListener('click', popupQuestionClick);
- deletedModalClosed.removeEventListener('click', deletedModalClosedClick);
-};
-
-//remove card
-export function removeCard(event) {
-    event.target.closest('.card').remove();
-  };
+  
   // like
   function likeCard (evt, id, likeCount) {
-    if(evt.target.classList.toggle('card__like-button_is-active')) {
-      addLike(id).then(res => res.json())
-      .then((result) => {
-        likeCount.textContent = result.likes.length  
-      }); 
-    } else {
-    deleteLike(id)
-    .then((res) => res.json())
-    .then((result) => {
-      likeCount.textContent = result.likes.length  
-    });
-    }
-  };
-
+  const likeMethod = evt.target.classList.contains('card__like-button_is-active') ? deleteLike: addLike;
+likeMethod(id)
+        .then((result) => {
+           likeCount.textContent = result.likes.length; 
+           evt.target.classList.toggle("card__like-button_is-active"); 
+        })
+.catch(err => console.log(err));
+}
 
  
-

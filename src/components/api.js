@@ -1,7 +1,7 @@
 import { showInputError } from './validation.js';
 
 
-let user 
+
 
 const apiConfig = {
     baseUrl: 'https://nomoreparties.co/v1/wff-cohort-9',
@@ -39,6 +39,7 @@ const apiConfig = {
         return false;
       }).catch((err) => {
         console.log(err)
+        return false;
       });
   }
   
@@ -47,6 +48,8 @@ const apiConfig = {
           headers: apiConfig.headers
       }).then((res) => {
         return checkResponse(res);
+      }).catch((err)=> {
+        console.log(err)
       });
   }
   function updateUserData(userName, userDesctiption) {
@@ -59,18 +62,21 @@ const apiConfig = {
           })
       }).then((res) => {
         return checkResponse(res);
+      }).catch((err)=> {
+        console.log(err)
       });
-      
   }
   
 
-  function getCardData() {
+  function getCardsData() {
     return fetch(apiConfig.baseUrl + '/cards', {
           method: 'GET',
           headers: apiConfig.headers,
       }).then((res) => {
         return checkResponse(res);
-      })
+      }).catch((err)=> {
+        console.log(err)
+      });
     }
 
   function addNewCard(cardName, cardLink) {
@@ -83,34 +89,46 @@ const apiConfig = {
           })
       }).then((res) => {
         return checkResponse(res);
+      }).catch((err)=> {
+        console.log(err)
       });
       
   }
 
-  function deleteCard(cardId) {
-    return fetch(apiConfig.baseUrl + '/cards/' + cardId, {
-          method: 'DELETE',
-          headers: apiConfig.headers
+  function cardDeleteRequest(cardId) {
+    return fetch(`${apiConfig.baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: apiConfig.headers
     }).then((res) => {
-      return checkResponse(res);
-    })
+           return checkResponse(res);
+         }).catch((err)=> {
+          console.log(err)
+        });
   }
 
   function addLike(id) {
     return fetch(`${apiConfig.baseUrl}/cards/likes/${id}`, {
       method: 'PUT',
       headers: apiConfig.headers
-    });  
+    }).then((res) => {
+      return checkResponse(res);
+    }).catch((err)=> {
+      console.log(err)
+    });
   }
 
   function deleteLike(id) {
     return fetch(`${apiConfig.baseUrl}/cards/likes/${id}`, {
       method: 'DELETE',
       headers: apiConfig.headers
-    })
+    }).then((res) => {
+      return checkResponse(res);
+    }).catch((err)=> {
+      console.log(err)
+    });
   }
 
-  function NewAvatar(link) {
+  function setNewAvatar(link) {
     return fetch(apiConfig.baseUrl + '/users/me/avatar', {
       method: 'PATCH',
       headers: apiConfig.headers,
@@ -127,10 +145,10 @@ const apiConfig = {
 
 
   function loadData() {
-     return Promise.all([getCardData(), getUserData()]);
+     return Promise.all([getCardsData(), getUserData()]);
   }
 
-  export{NewAvatar, updateUserData, getCardData, getUserData, loadData, addNewCard, deleteCard, addLike, user, deleteLike, checkLinkType}
+  export{checkResponse, setNewAvatar, updateUserData, getCardsData, getUserData, loadData, addNewCard, cardDeleteRequest, addLike, deleteLike, checkLinkType}
 
 
 

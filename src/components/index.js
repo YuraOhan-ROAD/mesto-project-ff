@@ -1,7 +1,7 @@
 import '../pages/index.css';
-import {createCard, removeCard} from './card.js';
+import {createCard,remCard} from './card.js';
 import { closeModal, openModal } from './modal.js';
-import {addNewCard, loadData, updateUserData, user, NewAvatar,checkLinkType} from './api.js';
+import {checkResponse, addNewCard, loadData, updateUserData, setNewAvatar,checkLinkType,cardDeleteRequest} from './api.js';
 import {enableValidation, clearValidation, checkFormValidity} from './validation.js';
 
 
@@ -24,11 +24,40 @@ const formElementAdd = document.forms["new-place"];
 const openedPopupPic = document.querySelector('.popup_type_image');
 const popupPicImage = document.querySelector('.popup__image');
 const popupPicTitle = document.querySelector('.popup__caption');  
-// const popupTypeImage = document.querySelector('.popup_type_image');
 const modalEditAvatar = document.querySelector('.popup_type_edit-avatar');
 const profileAvatarEditButton = document.querySelector('.profile__image-edit-button');
 const formEditAvatar = document.forms['edit-avatar'];
 const editAvatarInput = formEditAvatar.elements.link;
+
+
+
+const cardDeletePopup = document.querySelector('.popup_type_delete');
+const deleteButton = cardDeletePopup.querySelector('.popup__button');
+let cardToRemoveElement;
+let cardId;
+
+function removeCard(cardElement) {
+  cardDeleteRequest(cardId.card["_id"])
+  .then(() => {
+      cardElement.remove();
+    });
+}
+
+function handleRemove(cardElement, cardData) {
+  cardToRemoveElement = cardElement;
+  cardId = cardData;
+  openModal(cardDeletePopup);
+}
+
+
+deleteButton.addEventListener('click', () => {
+  if (cardToRemoveElement) {
+    removeCard(cardToRemoveElement);
+    closeModal(cardDeletePopup);
+  }
+});
+
+
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -41,13 +70,14 @@ const validationConfig = {
 
 
 loadData().then((res) => {
-  if (!res || res[0].length === 0) return;
+  if (!res) return;
+  if (res[0].length !== 0) {
+    res[0].forEach((el) => {
+      const addCard = createCard({card: el, user: res[1]},handleRemove, picOpener);
+      list.appendChild(addCard)
+    })
+  };
   setUserData(res[1].avatar)
-  res[0].forEach((el) => {
-    let obj = {name: el.name, link: el.link}
-    const addCard = createCard({card: el, user: res[1]},removeCard, picOpener);
-    list.appendChild(addCard)
-  });
   profileTitle.textContent = res[1].name;
    profileDescription.textContent = res[1].about;
 });
@@ -74,21 +104,24 @@ function editButtonLoading(buttonElement) {
     const err = document.querySelector('.avatar-link-input-error')
     editButtonLoading(evt.target.querySelector('.popup__button'));
     checkLinkType(link, err, editAvatarInput, validationConfig);
-    NewAvatar(link)
+    setNewAvatar(link)
       .then((res) => {
 
         if (res) {
-          return NewAvatar(link);
+          return res;
+        } else {
+          return Promise.reject(`Не удалось получить данные: ${res?.status}`);
         }
-        return Promise.reject(`Не удалось получить данные: ${res?.status}`);
+        
       })
       .then((result) => {
         setUserData(result.avatar);
         closeModal(modalEditAvatar);
-        editButtonLoading(evt.target.querySelector('.popup__button'));
       }).catch((err) => {
         console.log(err);
-      })
+      }).finally(() => {
+        editButtonLoading(evt.target.querySelector('.popup__button'));
+      });
     
       
   }
@@ -125,7 +158,7 @@ formElementAdd.addEventListener("submit", (ev) => {
   };
   addNewCard(contentCard.name, contentCard.link).then((res) => {
     list.prepend(
-      createCard({card: res, user: res.owner}, removeCard, picOpener));
+      createCard({card: res, user: res.owner}, handleRemove, picOpener));
     closeModal(modalAdd);
     editButtonLoading(ev.target.querySelector('.popup__button'));
     formElementAdd.reset();  
@@ -144,7 +177,7 @@ profileForm.addEventListener("submit",(evt) => {
   updateUserData(userInput.value,jobInput.value)
   .then((res) => {
   profileTitle.textContent = res.name;
-   profileDescription.textContent = res.name;
+   profileDescription.textContent = res.about;
 
   closeModal(modalTypeEdit);
   editButtonLoading(evt.target.querySelector('.popup__button'));
@@ -157,5 +190,3 @@ profileForm.addEventListener("submit",(evt) => {
 
 
 enableValidation(validationConfig);
-
-
